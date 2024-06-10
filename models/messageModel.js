@@ -1,7 +1,7 @@
-const db = require('../config/db');
+import db from '../config/db.js';
 
 // Funktion zum Speichern einer Nachricht in der Datenbank
-const saveMessage = async (message) => {
+export const saveMessage = async (message) => {
   try {
     // Einfügen der Nachricht in die Datenbank
     const response = await db.insert(message);
@@ -9,9 +9,4 @@ const saveMessage = async (message) => {
   } catch (error) {
     throw new Error('Error saving message:', error); // Fehlerbehandlung
   }
-};
-
-// Exportieren der Funktion, damit sie in anderen Dateien verwendet werden kann
-module.exports = {
-  saveMessage,
 };

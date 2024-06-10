@@ -1,13 +1,17 @@
-const nano = require('nano')('http://admin:password@localhost:5984'); // URL zur CouchDB mit Anmeldedaten
-const dbName = 'messages'; // Name der zu verwendenden Datenbank
+import nano from 'nano';
+
+const couchdbUrl = 'http://admin:password@localhost:5984';
+const dbName = 'messages';
+
+const nanoInstance = nano(couchdbUrl);
 
 // Verbindung zur CouchDB-Datenbank herstellen
-const db = nano.db.use(dbName);
+const db = nanoInstance.db.use(dbName);
 
 // Prüfen, ob die Datenbank existiert, und gegebenenfalls erstellen
-nano.db.get(dbName, (err) => {
+nanoInstance.db.get(dbName, (err) => {
   if (err) {
-    nano.db.create(dbName, (errCreate) => {
+    nanoInstance.db.create(dbName, (errCreate) => {
       if (errCreate) {
         console.error('Error creating database:', errCreate);
       } else {
@@ -17,5 +21,4 @@ nano.db.get(dbName, (err) => {
   }
 });
 
-// Exportieren der Datenbankverbindung, damit sie in anderen Dateien verwendet werden kann
-module.exports = db;
+export default db;

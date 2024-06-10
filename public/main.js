@@ -1,3 +1,5 @@
+import { io } from 'socket.io-client';
+
 // Verbindung zum WebSocket-Server herstellen
 const socket = io();
 
@@ -19,22 +21,31 @@ socket.on('newMessage', (msg) => {
   messageElement.classList.add('message', msg.username === username ? 'sent' : 'received');
   messageElement.textContent = `${msg.username}: ${msg.text}`;
   chat.appendChild(messageElement);
-  chat.scrollTop = chat.scrollHeight;
+    chat.scrollTop = chat.scrollHeight;
+    if (msg.username != username) {
+        playSoundRecieve();
+    }
 });
 
-function setUsername() {
+const playSoundRecieve = () => {
+    var audio = new Audio('./web_whatsapp.mp3');
+    audio.play();
+}
+
+
+const setUsername = () => {
   username = document.getElementById('usernameInput').value;
   console.log('Username set to:', username);
 }
 
-function sendMessage() {
-  if (username === '') {
+const sendMessage = () => {
+  if (!username) {
     alert('Please set your name first.');
     return;
   }
   const message = document.getElementById('messageInput').value;
   console.log('Sending message:', message);
-  socket.emit('message', { username: username, text: message });
+  socket.emit('message', { username, text: message });
   document.getElementById('messageInput').value = '';
 }
 
@@ -49,3 +60,5 @@ document.getElementById('messageInput').addEventListener('keypress', (e) => {
     sendMessage();
   }
 });
+
+document.getElementById('sendButton').addEventListener('click', sendMessage);

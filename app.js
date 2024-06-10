@@ -1,11 +1,11 @@
-const express = require('express');  // Web-Framework für Node.js
-const http = require('http');        // Modul zum Erstellen eines HTTP-Servers
-const socketIo = require('socket.io'); // Modul für WebSocket-Kommunikation
-const websocketServer = require('./server/websocketServer'); // Eigene Datei für WebSocket-Logik
+import express from 'express';
+import http from 'http';
+import { Server } from 'socket.io';
+import { websocketServer } from './server/websocketServer.js';
 
 // Initialisieren einer Express-Anwendung
 const app = express();
-const server = http.createServer(app); // Erstellen eines HTTP-Servers mit der Express-App
+const server = http.createServer(app);
 
 // Initialisieren des WebSocket-Servers und Binden an den HTTP-Server
 websocketServer(server);

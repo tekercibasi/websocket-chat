@@ -17,7 +17,7 @@
       <div class="input-group">
         <input id="messageInput" type="text" class="form-control" placeholder="Enter your message">
         <div class="input-group-append">
-          <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+          <button class="btn btn-primary" id="sendButton">Send</button>
         </div>
       </div>
     </div>
@@ -25,6 +25,6 @@
 
   <!-- Einbinden des socket.io-Clients und der main.js -->
   <script src="/socket.io/socket.io.js"></script>
-  <script src="main.js"></script>
+  <script src="main.js" type="module"></script>
 </body>
 </html>
