@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebSocket Chat</title>
+  <!-- Einbinden von Bootstrap -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f8f9fa;
+    }
+    #chat-container {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 400px;
+      height: 500px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background-color: #fff;
+    }
+    #chat {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+      background-color: #e9ecef;
+    }
+    .message {
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 70%;
+      clear: both;
+    }
+    .message.sent {
+      background-color: #dcf8c6;
+      align-self: flex-end;
+    }
+    .message.received {
+      background-color: #fff;
+      align-self: flex-start;
+    }
+    #messageInput {
+      width: calc(100% - 100px);
+    }
+  </style>
+</head>
+<body>
+  <div id="chat-container" class="shadow">
+    <div id="chat"></div>
+    <div class="p-2 bg-light">
+      <input id="usernameInput" type="text" class="form-control mb-2" placeholder="Enter your name">
+      <div class="input-group">
+        <input id="messageInput" type="text" class="form-control" placeholder="Enter your message">
+        <div class="input-group-append">
+          <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Einbinden des socket.io-Clients -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    const chat = document.getElementById('chat');
+    let username = '';
+
+    socket.on('connect', () => {
+      console.log('Connected to WebSocket server');
+    });
+
+    socket.on('disconnect', () => {
+      console.log('Disconnected from WebSocket server');
+    });
+
+    socket.on('newMessage', (msg) => {
+      console.log('New message received:', msg);
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('message', msg.username === username ? 'sent' : 'received');
+      messageElement.textContent = `${msg.username}: ${msg.text}`;
+      chat.appendChild(messageElement);
+      chat.scrollTop = chat.scrollHeight;
+    });
+
+    function setUsername() {
+      username = document.getElementById('usernameInput').value;
+      console.log('Username set to:', username);
+    }
+
+    function sendMessage() {
+      if (username === '') {
+        alert('Please set your name first.');
+        return;
+      }
+      const message = document.getElementById('messageInput').value;
+      console.log('Sending message:', message);
+      socket.emit('message', { username: username, text: message });
+      document.getElementById('messageInput').value = '';
+    }
+
+    document.getElementById('usernameInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        setUsername();
+      }
+    });
+
+    document.getElementById('messageInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>
