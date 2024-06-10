@@ -46,13 +46,13 @@ Diese Anwendung ist ein Echtzeit-Chat, der WebSockets und CouchDB verwendet. Die
 - **Einbindung von Bootstrap**: Für eine ansprechende und responsive Gestaltung.
 - **Einbindung von `socket.io-client`**: Um die WebSocket-Verbindung zum Server herzustellen.
 
-#### 2.2 CSS (inline in HTML)
+#### 2.2 CSS (public/styles.css)
 - **Zweck**: Stellt das Layout und die Stile für den Chat bereit, um eine WhatsApp-ähnliche Oberfläche zu erstellen.
 - **Stile**:
   - **Chat-Container**: Definiert das Layout des Chatbereichs.
   - **Nachrichten**: Unterscheidung von gesendeten und empfangenen Nachrichten durch unterschiedliche Farben und Ausrichtungen.
 
-#### 2.3 JavaScript (inline in HTML)
+#### 2.3 JavaScript (public/main.js)
 - **Zweck**: Stellt die Logik für die WebSocket-Kommunikation und die Benutzerinteraktionen bereit.
 - **Funktionen**:
   - **WebSocket-Verbindung**: Initialisiert die Verbindung zum WebSocket-Server.
@@ -94,9 +94,10 @@ Diese Anwendung ist ein Echtzeit-Chat, der WebSockets und CouchDB verwendet. Die
 ### Schritte
 
 1. **Repository klonen**:
-   ```bash
+```bash
    git clone <repository-url>
    cd my-websocket-app
+```
 
 2. **Abhängigkeiten installieren**:
 
@@ -109,9 +110,9 @@ Diese Anwendung ist ein Echtzeit-Chat, der WebSockets und CouchDB verwendet. Die
 
 4. **Server starten**:
 
-    ```bash
+```bash
     npm start
-    ```
+```
 
 4. **Anwendung im Browser öffnen**:
 

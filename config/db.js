@@ -1,4 +1,4 @@
-const nano = require('nano')('http://admin:YOURPASSWORD@localhost:5984'); // URL zur CouchDB
+const nano = require('nano')('http://admin:password@localhost:5984'); // URL zur CouchDB mit Anmeldedaten
 const dbName = 'messages'; // Name der zu verwendenden Datenbank
 
 // Verbindung zur CouchDB-Datenbank herstellen
